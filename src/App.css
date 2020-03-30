@@ -9,3 +9,11 @@
 .card .card-content p.timestamp{
   color: #999;
 }
+
+.push-in{
+  margin: 50px;
+}
+
+.progress{
+  margin: 100px 0;
+}

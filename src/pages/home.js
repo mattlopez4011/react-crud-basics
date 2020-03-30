@@ -5,6 +5,7 @@ import PostForm from '../components/PostForm';
 const Home = () => {
   // Array Destructuring
   const [posts, setPosts] = useState([]);
+  const [limit, setLimit] = useState(5);
 
   // useEffect Hook
   // axios retrieves the posts from the Api
@@ -31,11 +32,33 @@ const Home = () => {
       .catch(err => console.error(err));
   }
 
+  function addPost(post){
+    const postsUpdated = [post, ...posts]; // [new post, ...existing posts]
+    setPosts(postsUpdated);
+  }
+
+  const getNumberOfPosts = () => {
+    axios.get(`/posts/${limit}`)
+      .then(res =>
+      // Adds all the posts to the state
+        setPosts(res.data)
+      )
+      .catch(err => console.error(err));
+  };
+
   return (
     <div>
         <div className="row">
           <div className="col s6">
-            <PostForm/>
+            <PostForm addPost={addPost}/>
+          </div>
+          <div className="col s3 push-in">
+            <p>Limit number of posts</p>
+            <input type="number"
+              value={limit}
+              onChange={event => setLimit(event.target.value)}
+            />
+            <button onClick={getNumberOfPosts} className="waves-effect waves-light btn">Set</button>
           </div>
         </div>
       <div className="row">
