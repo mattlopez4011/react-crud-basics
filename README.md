@@ -1,10 +1,6 @@
 ## Deployed to Netlify
 
-https://react-crud-basics.netlify.com/
-
-
-
-
+View project at =  https://react-crud-basics.netlify.com/
 
 ## Available Scripts
 
