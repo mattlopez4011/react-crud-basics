@@ -6,6 +6,11 @@ const Home = () => {
   // Array Destructuring
   const [posts, setPosts] = useState([]);
   const [limit, setLimit] = useState(5);
+  const [editingPost, setEditingPost] = useState({
+    title: '',
+    body: '',
+    id: null
+  });
 
   // useEffect Hook
   // axios retrieves the posts from the Api
@@ -19,7 +24,7 @@ const Home = () => {
   }, []); // deps: empty array means it will fetch posts once.
 
   function editPost(post){
-    console.log(post);
+    setEditingPost(post)
   }
 
   function deletePost(id){
@@ -33,8 +38,19 @@ const Home = () => {
   }
 
   function addPost(post){
-    const postsUpdated = [post, ...posts]; // [new post, ...existing posts]
-    setPosts(postsUpdated);
+    if (posts.find(p => p.id === post.id)){
+      // Find index for post we would like to edit
+      const index = posts.findIndex(p => p.id === post.id);
+      // Remove post and add edited version to posts array
+      const postsUpdated = [...posts]; // all posts
+      postsUpdated.splice(index, 1, post ); // remove this index, remove 1, replace with new post
+      setPosts(postsUpdated); // Set state of new array
+    } else {
+      const postsUpdated = [post, ...posts]; // [new post, ...existing posts]
+      setPosts(postsUpdated);
+    }
+
+
   }
 
   const getNumberOfPosts = () => {
@@ -50,7 +66,7 @@ const Home = () => {
     <div>
         <div className="row">
           <div className="col s6">
-            <PostForm addPost={addPost}/>
+            <PostForm addPost={addPost} editingPost={editingPost}/>
           </div>
           <div className="col s3 push-in">
             <p>Limit number of posts</p>
