@@ -61,7 +61,7 @@ const Home = () => {
       )
       .catch(err => console.error(err));
   };
-// Test
+
   return (
     <div>
         <div className="row">
